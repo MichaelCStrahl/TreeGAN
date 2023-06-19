@@ -27,18 +27,18 @@ class BenchmarkDataset(data.Dataset):
             self.meta[item] = []
             dir_point = os.path.join(self.root, self.cat[item], 'points')
             dir_seg = os.path.join(self.root, self.cat[item], 'points_label')
-            dir_sampling = os.path.join(self.root, self.cat[item], 'sampling')
+            """dir_sampling = os.path.join(self.root, self.cat[item], 'sampling'), fn[2],os.path.join(dir_sampling, token + '.sam')""" 
 
             fns = sorted(os.listdir(dir_point))
 
             for fn in fns:
                 token = (os.path.splitext(os.path.basename(fn))[0])
-                self.meta[item].append((os.path.join(dir_point, token + '.pts'), os.path.join(dir_seg, token + '.seg'), os.path.join(dir_sampling, token + '.sam')))
+                self.meta[item].append((os.path.join(dir_point, token + '.pts'), os.path.join(dir_seg, token + '.seg')))
 
         self.datapath = []
         for item in self.cat:
             for fn in self.meta[item]:
-                self.datapath.append((item, fn[0], fn[1], fn[2]))
+                self.datapath.append((item, fn[0], fn[1]))
 
 
         self.classes = dict(zip(sorted(self.cat), range(len(self.cat))))
@@ -56,11 +56,11 @@ class BenchmarkDataset(data.Dataset):
         point_set = np.loadtxt(fn[1]).astype(np.float32)
         seg = np.loadtxt(fn[2]).astype(np.int64)
 
-        if self.uniform:
+        """if self.uniform:
             choice = np.loadtxt(fn[3]).astype(np.int64)
             assert len(choice) == self.npoints, "Need to match number of choice(2048) with number of vertices."
-        else:
-            choice = np.random.randint(0, len(seg), size=self.npoints)
+        else:"""
+        choice = np.random.randint(0, len(seg), size=self.npoints)
 
         point_set = point_set[choice]
         seg = seg[choice]
