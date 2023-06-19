@@ -8,12 +8,12 @@ from PIL import Image
 import random
 
 #SAVE_DIR = 'C:/dataset/Spatial_single/'
-SAVE_DIR = 'C:/dataset/Spatial/'
+SAVE_DIR = '/content/dataset/Spatial/'
 #SAVE_DIR = '/home/cvml/spatial/dataset/Spatial/'
-IMAGE_DIR = 'D:/dataset/ShapeNetRendering/'
-POINT_DIR = 'D:/dataset/ShapeNetPointcloud/'
-OBJ_DIR = 'D:/dataset/ShapeNetCore.v2/'
-CATEGORY_FILE = './data/synsetoffset2category.txt'
+IMAGE_DIR = '/content/dataset/ShapeNetRendering/'
+POINT_DIR = '/content/dataset/ShapeNetPointcloud/'
+OBJ_DIR = '/content/dataset/ShapeNetCore.v2/'
+CATEGORY_FILE = '/content/shapenetcore_partanno_segmentation_benchmark_v0/synsetoffset2category.txt'
 
 class SpatialDataset(data.Dataset):
     def __init__(self, class_choice=None, train=True):
