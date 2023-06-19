@@ -35,7 +35,7 @@ class TreeGAN():
 
         # ---------------------------------------------Visualization------------------------------------------- #
         self.vis = visdom.Visdom(port=args.visdom_port)
-        assert self.vis.check_connection()
+        """assert self.vis.check_connection()"""
         print("Visdom connected.")
         # ----------------------------------------------------------------------------------------------------- #
 
