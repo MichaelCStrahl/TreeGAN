@@ -8,7 +8,7 @@ from model.gradient_penalty import GradientPenalty
 from evaluation.FPD import calculate_fpd
 
 from arguments import Arguments
-
+import plotly.express as px
 import time
 import visdom
 import numpy as np
@@ -135,15 +135,17 @@ class TreeGAN():
                     plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1)
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)
 
-                    self.vis.line(X=plot_X, Y=plot_Y, win=1,
+                    """self.vis.line(X=plot_X, Y=plot_Y, win=1,
+                                  opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
+                    self.px.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})
 
-                    self.vis.scatter(X=generated_point[:,torch.LongTensor([2,0,1])], Y=label, win=2,
-                                     opts={'title': "Generated Pointcloud", 'markersize': 2, 'markercolor': colors, 'webgl': True})
+                    """self.vis.scatter(X=generated_point[:,torch.LongTensor([2,0,1])], Y=label, win=2,
+                                     opts={'title': "Generated Pointcloud", 'markersize': 2, 'markercolor': colors, 'webgl': True})"""
 
-                    if len(metric['FPD']) > 0:
+                    """if len(metric['FPD']) > 0:
                         self.vis.line(X=np.arange(len(metric['FPD'])), Y=np.array(metric['FPD']), win=3, 
-                                      opts={'title': "Frechet Pointcloud Distance", 'legend': ["FPD best : {}".format(np.min(metric['FPD']))]})
+                                      opts={'title': "Frechet Pointcloud Distance", 'legend': ["FPD best : {}".format(np.min(metric['FPD']))]})"""
 
                     print('Figures are saved.')
 
