@@ -137,11 +137,13 @@ class TreeGAN():
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
                     plot_X = [np.arange(len(loss_log[legend])) for legend in loss_legend]
                     plot_Y = [np.array(loss_log[legend]) for legend in loss_legend]
+                    print(plot_X)
+                    print(plot_Y)
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
-                    fig = px.line(x = plot_X, y = plot_Y, title = "Loss"),
-                    fig.show()
+                    """fig = px.line(x = plot_X, y = plot_Y, title = "Loss"),
+                    fig.show()"""
 
                     """self.vis.scatter(X=generated_point[:,torch.LongTensor([2,0,1])], Y=label, win=2,
                                      opts={'title': "Generated Pointcloud", 'markersize': 2, 'markercolor': colors, 'webgl': True})"""
