@@ -137,7 +137,7 @@ class TreeGAN():
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
-                    fig = self.px.line(X=plot_X, Y=plot_Y, win=1,
+                    fig = px.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})
                     fig.show()
 
