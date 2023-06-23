@@ -138,7 +138,9 @@ class TreeGAN():
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
-                    df = pd.DataFrame(dict(plot_X, plot_Y))
+                    df = pd.DataFrame(dict(
+                        x = plot_X,
+                        y = plot_Y))
                     fig = px.line(df,x = "Iteração", y = "Loss", title = "Loss"),
                     fig.show()
 
