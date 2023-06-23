@@ -9,6 +9,7 @@ from evaluation.FPD import calculate_fpd
 
 from arguments import Arguments
 import plotly.express as px
+import pandas as pd
 import time
 import visdom
 import numpy as np
@@ -137,8 +138,8 @@ class TreeGAN():
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
-                    fig = px.line(X=plot_X, Y=plot_Y, win=1,
-                                  opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})
+                    df = pd.DataFrame(dict(plot_X, plot_Y))
+                    fig = px.line(df,x = "Iteração", y = "Loss", title = "Loss"),
                     fig.show()
 
                     """self.vis.scatter(X=generated_point[:,torch.LongTensor([2,0,1])], Y=label, win=2,
