@@ -154,6 +154,7 @@ class TreeGAN():
                     fig.add_trace(go.Scatter(x=new_x, y=loss_D,
                                         mode='lines',
                                         name='Loss D'))
+                    fig.show()
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
