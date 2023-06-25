@@ -137,8 +137,10 @@ class TreeGAN():
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
                     plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1) 
                     plot_Y = [np.array(loss_log[legend]) for legend in loss_legend]
-                    print(plot_X)
-                    print(plot_Y)
+                    new_x = [row[0] for row in plot_X]
+                    print(new_x)
+                    #print(plot_X)
+                    #print(plot_Y)
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
