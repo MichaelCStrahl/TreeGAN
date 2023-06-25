@@ -147,14 +147,14 @@ class TreeGAN():
                     #print(plot_X)
                     #print(loss_G)
                     #print(loss_D)
-                   fig = go.Figure()
-                   fig.add_trace(go.Scatter(x=random_x, y=loss_G,
+                    fig = go.Figure()
+                    fig.add_trace(go.Scatter(x=random_x, y=loss_G,
                                         mode='lines',
                                         name='Loss G'))
-                   fig.add_trace(go.Scatter(x=new_x, y=loss_D,
+                    fig.add_trace(go.Scatter(x=new_x, y=loss_D,
                                         mode='lines',
                                         name='Loss D'))
-                   fig.show()
+                    fig.show()
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
