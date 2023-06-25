@@ -155,6 +155,7 @@ class TreeGAN():
                                         mode='lines',
                                         name='Loss D'))
                     fig.show()
+                    generated_point_cpu = generated_point.cpu().numpy()
                     x = generated_point[:, 2]
                     y = generated_point[:, 0]
                     z = generated_point[:, 1]
