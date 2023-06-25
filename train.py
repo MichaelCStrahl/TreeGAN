@@ -158,8 +158,6 @@ class TreeGAN():
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
-                    """fig = px.line(x = plot_X, y = plot_Y, title = "Loss"),
-                    fig.show()"""
 
                     """self.vis.scatter(X=generated_point[:,torch.LongTensor([2,0,1])], Y=label, win=2,
                                      opts={'title': "Generated Pointcloud", 'markersize': 2, 'markercolor': colors, 'webgl': True})"""
