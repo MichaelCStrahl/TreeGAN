@@ -146,11 +146,8 @@ class TreeGAN():
                     #print(plot_X)
                     #print(loss_G)
                     #print(loss_D)
-                    df = pd.DataFrame(dict(
-                        x = new_x,
-                        y = loss_G))
-                    fig = px.line(df, x="x", y="y", title="Loss G") 
-                    fig.show(renderer="colab")
+                    fig = px.line(x = new_x, y = loss_G, title="Loss G") 
+                    fig.show()
                    
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
