@@ -150,7 +150,7 @@ class TreeGAN():
                         x = new_x,
                         y = loss_G))
                     fig = px.line(df, x="x", y="y", title="Loss G") 
-                    fig.show()
+                    fig.show(renderer="colab")
                    
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
