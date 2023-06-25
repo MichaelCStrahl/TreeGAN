@@ -155,10 +155,10 @@ class TreeGAN():
                                         mode='lines',
                                         name='Loss D'))
                     fig.show()
-                    generated_point_cpu = generated_point.cpu().detach().numpy()
-                    x = generated_point[:, 2]
-                    y = generated_point[:, 0]
-                    z = generated_point[:, 1]
+                    generated_point_cpu = generated_point.to('cpu').detach().numpy()
+                    x = generated_point_cpu[:, 2]
+                    y = generated_point_cpu[:, 0]
+                    z = generated_point_cpu[:, 1]
                     trace = go.Scatter3d(
                         x=x,
                         y=y,
