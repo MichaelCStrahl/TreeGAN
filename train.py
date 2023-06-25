@@ -14,6 +14,8 @@ import time
 import visdom
 import numpy as np
 import plotly.graph_objects as go
+import plotly.io as pio 
+pio.renderers.default = "colab"
 
 class TreeGAN():
     def __init__(self, args):
