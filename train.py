@@ -11,7 +11,7 @@ from arguments import Arguments
 import plotly.express as px
 import pandas as pd
 import time
-import visdom
+#import visdom
 import numpy as np
 import plotly.graph_objects as go
 
@@ -43,7 +43,7 @@ class TreeGAN():
         # ----------------------------------------------------------------------------------------------------- #
 
     def run(self, save_ckpt=None, load_ckpt=None):        
-        color_num = self.args.visdom_color
+        color_num = 4
         chunk_size = int(self.args.point_num / color_num)
         colors = np.array([(227,0,27),(231,64,28),(237,120,15),(246,176,44),
                            (252,234,0),(224,221,128),(142,188,40),(18,126,68),
@@ -148,7 +148,7 @@ class TreeGAN():
                     #print(loss_G)
                     #print(loss_D)
                     fig = go.Figure()
-                    fig.add_trace(go.Scatter(x=random_x, y=loss_G,
+                    fig.add_trace(go.Scatter(x=new_x, y=loss_G,
                                         mode='lines',
                                         name='Loss G'))
                     fig.add_trace(go.Scatter(x=new_x, y=loss_D,
