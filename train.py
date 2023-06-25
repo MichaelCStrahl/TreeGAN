@@ -135,7 +135,7 @@ class TreeGAN():
                     generated_point = self.G.getPointcloud()
                     """plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1)
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
-                    plot_X = [np.arange(len(loss_log[legend])) 
+                    plot_X = np.arange(len(loss_log[legend])) 
                     plot_Y = [np.array(loss_log[legend]) for legend in loss_legend]
                     print(plot_X)
                     print(plot_Y)
