@@ -155,6 +155,39 @@ class TreeGAN():
                                         mode='lines',
                                         name='Loss D'))
                     fig.show()
+                    x = generated_point[:, 2]
+                    y = generated_point[:, 0]
+                    z = generated_point[:, 1]
+                    trace = go.Scatter3d(
+                        x=x,
+                        y=y,
+                        z=z,
+                        mode='markers',
+                        marker=dict(
+                            size=2,
+                            color=colors,
+                            colorscale='Viridis',  # Adjust the colorscale as per your preference
+                            opacity=1,
+                        )
+                    )
+                    data = [trace]
+                    # Create the layout for the plot
+                    layout = go.Layout(
+                        title='Generated Pointcloud',
+                        scene=dict(
+                            xaxis_title='X',
+                            yaxis_title='Y',
+                            zaxis_title='Z'
+                        ),
+                        width=800,
+                        height=800
+                    )
+                    # Create the figure using data and layout
+                    fig = go.Figure(data=data, layout=layout)
+
+                    # Show the plot
+                    fig.show()
+
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
