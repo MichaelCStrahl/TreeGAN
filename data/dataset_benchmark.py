@@ -5,7 +5,7 @@ import os.path
 import torch
 import numpy as np
 
-class_choice = ['02691156', '02958343', '03636649']
+class_choice = ['Airplane']
 
 class BenchmarkDataset(data.Dataset):
     def __init__(self, root, npoints=2500, uniform=False, classification=False, class_choice=class_choice):
