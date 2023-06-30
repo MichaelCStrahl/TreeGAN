@@ -15,12 +15,13 @@ import time
 import numpy as np
 import plotly.graph_objects as go
 
+class_choice = ['02691156', '02958343', '03636649']
 
 class TreeGAN():
     def __init__(self, args):
         self.args = args
         # ------------------------------------------------Dataset---------------------------------------------- #
-        self.data = BenchmarkDataset(root=args.dataset_path, npoints=args.point_num, uniform=True, class_choice=args.class_choice)
+        self.data = BenchmarkDataset(root=args.dataset_path, npoints=args.point_num, uniform=True, class_choice=class_choice)
         self.dataLoader = torch.utils.data.DataLoader(self.data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4)
         print("Training Dataset : {} prepared.".format(len(self.data)))
         # ----------------------------------------------------------------------------------------------------- #
