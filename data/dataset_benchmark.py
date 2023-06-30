@@ -6,7 +6,7 @@ import torch
 import numpy as np
 
 class BenchmarkDataset(data.Dataset):
-    def __init__(self, root, npoints=2500, uniform=False, classification=False, class_choice= 'Airplane'):
+    def __init__(self, root, npoints=2500, uniform=False, classification=False, class_choice= Airplane):
         self.npoints = npoints
         self.root = root
         self.catfile = os.path.join(self.root, 'synsetoffset2category.txt')
