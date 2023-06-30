@@ -23,7 +23,7 @@ class BenchmarkDataset(data.Dataset):
                 
         #if not class_choice is  None:
            # self.cat = {k:v for k,v in self.cat.items() if k in class_choice}
-        if class_choice is not None:
+        if class_choice != 'None':
             self.cat = {k: v for k, v in self.cat.items() if k in class_choice}
         
 
