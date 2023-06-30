@@ -133,7 +133,7 @@ class TreeGAN():
                       "[ G_Loss ] ", "{: 7.6f}".format(g_loss), 
                       "[ Time ] ", "{:4.2f}s".format(time.time()-start_time))
 
-                if _iter % 50 == 0 and _iter !=0:
+                if _iter % 100 == 0 and _iter !=0:
                     generated_point = self.G.getPointcloud()
                     """plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1)
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
