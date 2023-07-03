@@ -15,7 +15,7 @@ import time
 import numpy as np
 import plotly.graph_objects as go
 
-class_choice = ['Airplane']
+class_choice = ['Airplane','Chair']
 
 class TreeGAN():
     def __init__(self, args):
