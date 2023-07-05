@@ -204,7 +204,7 @@ class TreeGAN():
                     print('Figures are saved.')
 
             # ---------------------- Save checkpoint --------------------- #
-            if epoch % 10 == 0 and not save_ckpt == None:
+            if epoch % 5 == 0 and not save_ckpt == None:
                 torch.save({
                         'epoch': epoch,
                         'iter': _iter,
