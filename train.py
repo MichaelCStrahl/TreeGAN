@@ -76,7 +76,7 @@ class TreeGAN():
             loss_log['D_loss'] = checkpoint['D_loss']
             loss_legend = list(loss_log.keys())
 
-            metric['FPD'] = checkpoint['FGD']
+            metric['FPD'] = checkpoint['FPD']
             
             print("Checkpoint loaded.")
 
