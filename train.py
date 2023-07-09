@@ -64,6 +64,7 @@ class TreeGAN():
 
             metric = {'FPD': []}
         else:
+            metric = {}
             loss_log = {'G_loss': [], 'D_loss': []}
             checkpoint = torch.load(load_ckpt)
             self.D.load_state_dict(checkpoint['D_state_dict'])
