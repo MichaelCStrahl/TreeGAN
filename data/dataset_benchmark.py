@@ -8,7 +8,7 @@ import numpy as np
 class_choice = ['Airplane','Chair']
 
 class BenchmarkDataset(data.Dataset):
-    def __init__(self, root, npoints=2500, uniform=False, classification=False, class_choice=class_choice):
+    def __init__(self, root, npoints=2500, uniform=False, classification=True, class_choice=class_choice):
         self.npoints = npoints
         self.root = root
         self.catfile = os.path.join(self.root, 'synsetoffset2category.txt')
