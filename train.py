@@ -139,6 +139,10 @@ class TreeGAN():
             
             print("Checkpoint loaded.")
 
+         # Evaluation settings
+        eval_batch_size = 100  # Adjust this based on your available GPU memory
+        eval_num_samples = 1000
+        
         for epoch in range(epoch_log, self.args.epochs):
             for _iter, data in enumerate(self.dataLoader, iter_log):
                 # Start Time
@@ -186,6 +190,11 @@ class TreeGAN():
                 self.optimizerG.step()
 
                 loss_log['G_loss'].append(g_loss.item())
+                
+                generator.eval()
+
+                total_accuracy = 0.0
+                num_batches = eval_num_samples // eval_batch_size
 
                 # --------------------- Visualization -------------------- #
 
@@ -305,8 +314,15 @@ class TreeGAN():
                 fpd = calculate_fpd(fake_pointclouds, batch_size=100, dims=1808, device=self.args.device)
                 metric['FPD'].append(fpd)
                 print('[{:4} Epoch] Frechet Pointcloud Distance <<< {:.10f} >>>'.format(epoch, fpd))
-                accuracy_on_generated = self.calculate_accuracy_on_generated_samples(num_samples=1000)
-                print(f'Accuracy on Generated Samples: {accuracy_on_generated:.2f}')
+                
+                with torch.no_grad():
+                    for batch_idx in range(num_batches):
+                        batch_accuracy = self.calculate_accuracy_on_generated_samples(
+                            self.G, self.classifier, num_samples=eval_batch_size
+                        )
+                        total_accuracy += batch_accuracy
+
+                total_accuracy /= num_batches
                 class_name = class_choice if class_choice is not None else 'all'
                 torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN_{}_{}.pt'.format(str(epoch), class_name))
                 del fake_pointclouds
