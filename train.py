@@ -41,6 +41,7 @@ class_choice = ['Airplane','Chair']
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
+
 class TreeGAN():
     def __init__(self, args):
         self.args = args
@@ -49,7 +50,10 @@ class TreeGAN():
         self.dataLoader = torch.utils.data.DataLoader(self.data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=2)
         print("Training Dataset : {} prepared.".format(len(self.data)))
         # ----------------------------------------------------------------------------------------------------- #
-
+        points, targets = next(iter(self.dataloader))
+        classifier = PointNetClassHead(k=16, num_global_feats=1024)
+        out, _, _ = classifier(points.transpose(2, 1))
+        #print(f'Class output shape: {out.shape}')
         # -------------------------------------------------Module---------------------------------------------- #
         self.G = Generator(batch_size=args.batch_size, features=args.G_FEAT, degrees=args.DEGREE, support=args.support).to(args.device)
         self.D = Discriminator(batch_size=args.batch_size, features=args.D_FEAT).to(args.device)             
