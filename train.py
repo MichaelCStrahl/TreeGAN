@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 
 from data.dataset_benchmark import BenchmarkDataset
+from data.shapenet_dataset import ShapenetDataset
+from Classificador.classificador import Tnet, PointNetBackbone, PointNetClassHead, PointNetSegHead
 from model.gan_network import Generator, Discriminator
 from model.gradient_penalty import GradientPenalty
 from evaluation.FPD import calculate_fpd
@@ -14,6 +16,25 @@ import time
 #import visdom
 import numpy as np
 import plotly.graph_objects as go
+
+CATEGORIES = {
+    'Airplane': 0,
+    #'Bag': 1,
+   # 'Cap': 2,
+   # 'Car': 3,
+    'Chair': 4,
+   # 'Earphone': 5,
+   ## 'Guitar': 6,
+   # 'Knife': 7,
+   # 'Lamp': 8,
+   # 'Laptop': 9,
+   ## 'Motorbike': 10,
+    #'Mug': 11,
+   # 'Pistol': 12,
+   ## 'Rocket': 13,
+    #'Skateboard': 14,
+   # 'Table': 15
+    }
 
 class_choice = ['Airplane','Chair']
 
@@ -191,6 +212,22 @@ class TreeGAN():
 
                     # Show the plot
                     fig.show()
+                    
+                    torch.cuda.empty_cache()
+                    points = generated_point
+            
+                    norm_points = ShapenetDataset.normalize_points(points)
+                    
+                    with torch.no_grad():
+                        norm_points = norm_points.unsqueeze(0).transpose(2, 1).to(DEVICE)
+                        targets = targets.squeeze().to(DEVICE)
+                    
+                        preds, crit_idxs, _ = classifier(norm_points)
+                        preds = torch.softmax(preds, dim=1)
+                        pred_choice = preds.squeeze().argmax()
+                    pred_class = list(CATEGORIES.keys())[pred_choice.cpu().numpy()]
+                    pred_prob = preds[0, pred_choice]
+                    print(f'The predicted class is: {pred_class}, with probability: {pred_prob}')
 
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
