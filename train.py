@@ -76,7 +76,7 @@ class TreeGAN():
         print("Visdom connected.")
         # ----------------------------------------------------------------------------------------------------- #
     
-    def calculate_accuracy_on_generated_samples(self, num_samples=1000):
+    def calculate_accuracy_on_generated_samples(self, num_samples=100):
         self.G.eval()
         self.classifier.eval()
         generated_samples = torch.Tensor([]).to(args.device)
