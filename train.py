@@ -38,6 +38,9 @@ CATEGORIES = {
 
 class_choice = ['Airplane','Chair']
 
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
 class TreeGAN():
     def __init__(self, args):
         self.args = args
