@@ -75,30 +75,30 @@ class TreeGAN():
         # ----------------------------------------------------------------------------------------------------- #
     
     def calculate_accuracy_on_generated_samples(generator, classifier, num_samples=1000):
-    generator.eval()
-    classifier.eval()
+        generator.eval()
+        classifier.eval()
+    
+        generated_samples = torch.Tensor([]).to(args.device)
+    
+        with torch.no_grad():
+            for _ in range(num_samples):
+                z = torch.randn(args.batch_size, 1, 96).to(args.device)
+                tree = [z]
+                sample = generator(tree)
+                generated_samples = torch.cat((generated_samples, sample), dim=0)
+    
+        # Normalize generated samples (similar to how training data was normalized)
+        normalized_samples = ShapenetDataset.normalize_points(generated_samples)
+    
+        # Pass normalized samples through the pre-trained classifier
+        with torch.no_grad():
+            logits, _, _ = classifier(normalized_samples.transpose(2, 1))
+            predictions = torch.argmax(logits, dim=1)
+    
+        # Calculate accuracy of the pre-trained classifier on generated samples
+        accuracy = (predictions == 0).float().mean().item()
 
-    generated_samples = torch.Tensor([]).to(args.device)
-
-    with torch.no_grad():
-        for _ in range(num_samples):
-            z = torch.randn(args.batch_size, 1, 96).to(args.device)
-            tree = [z]
-            sample = generator(tree)
-            generated_samples = torch.cat((generated_samples, sample), dim=0)
-
-    # Normalize generated samples (similar to how training data was normalized)
-    normalized_samples = ShapenetDataset.normalize_points(generated_samples)
-
-    # Pass normalized samples through the pre-trained classifier
-    with torch.no_grad():
-        logits, _, _ = classifier(normalized_samples.transpose(2, 1))
-        predictions = torch.argmax(logits, dim=1)
-
-    # Calculate accuracy of the pre-trained classifier on generated samples
-    accuracy = (predictions == 0).float().mean().item()
-
-    return accuracy
+        return accuracy
    
     def run(self, save_ckpt=None, load_ckpt=None):        
         color_num = 4
