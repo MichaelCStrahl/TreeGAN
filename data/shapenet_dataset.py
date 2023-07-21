@@ -14,7 +14,7 @@ This dataloader is based on:
 import os
 import json
 import numpy as np
-import open3d as o3
+#import open3d as o3
 from PIL import Image
 import torch
 from torch.utils.data import Dataset
