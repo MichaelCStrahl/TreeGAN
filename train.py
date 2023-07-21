@@ -40,7 +40,10 @@ class_choice = ['Airplane','Chair']
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-
+MODEL_PATH = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_49planechair.pth'
+classifier = PointNetClassHead(num_points=10000, num_global_feats=1024, k=16).to(DEVICE)
+classifier.load_state_dict(torch.load(MODEL_PATH))
+classifier.eval();
 
 class TreeGAN():
     def __init__(self, args):
@@ -51,7 +54,7 @@ class TreeGAN():
         print("Training Dataset : {} prepared.".format(len(self.data)))
         # ----------------------------------------------------------------------------------------------------- #
         #points, targets = next(iter(self.dataLoader))
-        #classifier = PointNetClassHead(k=16, num_global_feats=1024)
+        classifier = PointNetClassHead(k=16, num_global_feats=1024)
         #out, _, _ = classifier(points.transpose(2, 1))
         #print(f'Class output shape: {out.shape}')
         # -------------------------------------------------Module---------------------------------------------- #
