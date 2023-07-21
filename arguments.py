@@ -16,7 +16,7 @@ class Arguments:
         self._parser.add_argument('--lr', type=float, default=1e-4, help='Float value for learning rate.')
         self._parser.add_argument('--ckpt_path', type=str, default='/content/drive/MyDrive/ResultadosLothar/Checkpoints/', help='Checkpoint path.')
         self._parser.add_argument('--ckpt_save', type=str, default='tree_ckpt_', help='Checkpoint name to save.')
-        self._parser.add_argument('--ckpt_load', default='tree_ckpt_42.pt', type=str, help='Checkpoint name to load.')
+        self._parser.add_argument('--ckpt_load', default='tree_ckpt_45.pt', type=str, help='Checkpoint name to load.')
         self._parser.add_argument('--visdom_port', type=int, default=8097, help='Visdom port number. (default:8097)')
         self._parser.add_argument('--visdom_color', type=int, default=4, help='Number of colors for visdom pointcloud visualization. (default:4)')
 
