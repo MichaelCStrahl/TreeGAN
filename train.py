@@ -76,8 +76,8 @@ class TreeGAN():
         print("Visdom connected.")
         # ----------------------------------------------------------------------------------------------------- #
     
-    def calculate_accuracy_on_generated_samples(generator, classifier, num_samples=1000):
-        generator.eval()
+    def calculate_accuracy_on_generated_samples(self, num_samples=1000):
+        self.G.eval()
         
         generated_samples = torch.Tensor([]).to(args.device)
     
@@ -305,7 +305,7 @@ class TreeGAN():
                 fpd = calculate_fpd(fake_pointclouds, batch_size=100, dims=1808, device=self.args.device)
                 metric['FPD'].append(fpd)
                 print('[{:4} Epoch] Frechet Pointcloud Distance <<< {:.10f} >>>'.format(epoch, fpd))
-                accuracy_on_generated = self.calculate_accuracy_on_generated_samples(self.G, self.classifier, num_samples=1000)
+                accuracy_on_generated = self.calculate_accuracy_on_generated_samples(num_samples=1000)
                 print(f'Accuracy on Generated Samples: {accuracy_on_generated:.2f}')
                 class_name = class_choice if class_choice is not None else 'all'
                 torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN_{}_{}.pt'.format(str(epoch), class_name))
