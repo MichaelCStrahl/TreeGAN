@@ -40,10 +40,10 @@ class_choice = ['Airplane','Chair']
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-MODEL_PATH = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_49planechair.pth'
+'''MODEL_PATH = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_49planechair.pth'
 classifier = PointNetClassHead(num_points=10000, num_global_feats=1024, k=16).to(DEVICE)
 classifier.load_state_dict(torch.load(MODEL_PATH))
-classifier.eval();
+classifier.eval();'''
 
 class TreeGAN():
     def __init__(self, args):
@@ -53,10 +53,10 @@ class TreeGAN():
         self.dataLoader = torch.utils.data.DataLoader(self.data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=2)
         print("Training Dataset : {} prepared.".format(len(self.data)))
         # ----------------------------------------------------------------------------------------------------- #
-        #points, targets = next(iter(self.dataLoader))
-        classifier = PointNetClassHead(k=16, num_global_feats=1024)
-        #out, _, _ = classifier(points.transpose(2, 1))
-        #print(f'Class output shape: {out.shape}')
+        MODEL_PATH = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_49planechair.pth'
+        self.classifier = PointNetClassHead(num_points=args.point_num, num_global_feats=1024, k=16).to(args.device)
+        self.classifier.load_state_dict(torch.load(MODEL_PATH))
+        self.classifier.eval()
         # -------------------------------------------------Module---------------------------------------------- #
         self.G = Generator(batch_size=args.batch_size, features=args.G_FEAT, degrees=args.DEGREE, support=args.support).to(args.device)
         self.D = Discriminator(batch_size=args.batch_size, features=args.D_FEAT).to(args.device)             
@@ -228,16 +228,15 @@ class TreeGAN():
             
                     norm_points = ShapenetDataset.normalize_points(points)
                     
+                    norm_points = ShapenetDataset.normalize_points(points)
                     with torch.no_grad():
-                        norm_points = norm_points.unsqueeze(0).transpose(2, 1).to(DEVICE)
-                        #targets = targets.squeeze().to(DEVICE)
-                    
-                        preds, crit_idxs, _ = classifier(norm_points)
-                        preds = torch.softmax(preds, dim=1)
-                        pred_choice = preds.squeeze().argmax()
-                    pred_class = list(CATEGORIES.keys())[pred_choice.cpu().numpy()]
-                    pred_prob = preds[0, pred_choice]
-                    print(f'The predicted class is: {pred_class}, with probability: {pred_prob}')
+                    norm_points = norm_points.unsqueeze(0).transpose(2, 1).to(DEVICE)
+                    preds, _, _ = self.classifier(norm_points)
+                    preds = torch.softmax(preds, dim=1)
+                    pred_choice = preds.squeeze().argmax()
+                pred_class = list(CATEGORIES.keys())[pred_choice.cpu().numpy()]
+                pred_prob = preds[0, pred_choice]
+                print(f'The predicted class is: {pred_class}, with probability: {pred_prob}')
 
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
