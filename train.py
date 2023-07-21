@@ -227,7 +227,7 @@ class TreeGAN():
                     
                     with torch.no_grad():
                         norm_points = norm_points.unsqueeze(0).transpose(2, 1).to(DEVICE)
-                        targets = targets.squeeze().to(DEVICE)
+                        #targets = targets.squeeze().to(DEVICE)
                     
                         preds, crit_idxs, _ = classifier(norm_points)
                         preds = torch.softmax(preds, dim=1)
