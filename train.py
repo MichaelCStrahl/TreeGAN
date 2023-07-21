@@ -141,7 +141,7 @@ class TreeGAN():
 
          # Evaluation settings
         eval_batch_size = 100  # Adjust this based on your available GPU memory
-        eval_num_samples = 1000
+        eval_num_samples = 100
         
         for epoch in range(epoch_log, self.args.epochs):
             for _iter, data in enumerate(self.dataLoader, iter_log):
