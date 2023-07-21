@@ -93,7 +93,7 @@ class TreeGAN():
     
         # Pass normalized samples through the pre-trained classifier
         with torch.no_grad():
-            logits, _, _ = classifier(normalized_samples.transpose(2, 1))
+            logits, _, _ = self.classifier(normalized_samples.transpose(2, 1))
             predictions = torch.argmax(logits, dim=1)
     
         # Calculate accuracy of the pre-trained classifier on generated samples
