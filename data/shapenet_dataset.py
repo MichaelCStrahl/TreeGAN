@@ -56,14 +56,14 @@ class ShapenetDataset(Dataset):
             
             # get train, valid, test splits from json files
             if self.split == 'train':
-                split_file = os.path.join(self.root, 
-                    r'train_test_split\shuffled_train_file_list.json')
+                split_file = os.path.join(self.root,
+                    r'train_test_split/shuffled_train_file_list.json')
             elif self.split == 'test':
-                split_file = os.path.join(self.root, 
-                    r'train_test_split\shuffled_test_file_list.json')
+                split_file = os.path.join(self.root,
+                    r'train_test_split/shuffled_test_file_list.json')
             elif (self.split == 'valid') or (self.split == 'val'):
-                split_file = os.path.join(self.root, 
-                    r'train_test_split\shuffled_val_file_list.json')
+                split_file = os.path.join(self.root,
+                    r'train_test_split/shuffled_val_file_list.json')
                 
             with open(split_file, 'r') as f:
                 split_data = json.load(f)
