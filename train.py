@@ -78,7 +78,7 @@ class TreeGAN():
     
     def calculate_accuracy_on_generated_samples(self, num_samples=1000):
         self.G.eval()
-        
+        self.classifier.eval()
         generated_samples = torch.Tensor([]).to(args.device)
     
         with torch.no_grad():
