@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from data.dataset_benchmark import BenchmarkDataset
+from data.shapenet_dataset import ShapenetDataset
 from model.gan_network import Generator, Discriminator
 from model.gradient_penalty import GradientPenalty
 from evaluation.FPD import calculate_fpd
