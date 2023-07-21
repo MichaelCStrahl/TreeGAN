@@ -191,7 +191,7 @@ class TreeGAN():
 
                 loss_log['G_loss'].append(g_loss.item())
                 
-                generator.eval()
+                self.G.eval() 
 
                 total_accuracy = 0.0
                 num_batches = eval_num_samples // eval_batch_size
