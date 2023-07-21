@@ -85,7 +85,7 @@ class TreeGAN():
             for _ in range(num_samples):
                 z = torch.randn(args.batch_size, 1, 96).to(args.device)
                 tree = [z]
-                sample = generator(tree)
+                sample = self.G(tree)
                 generated_samples = torch.cat((generated_samples, sample), dim=0)
     
         # Normalize generated samples (similar to how training data was normalized)
