@@ -19,9 +19,11 @@ from PIL import Image
 import torch
 from torch.utils.data import Dataset
 
+class_choice = ['Airplane','Chair']
+
 class ShapenetDataset(Dataset):
 
-    def __init__(self, root, split, npoints=2500, classification=False, class_choice=None, 
+    def __init__(self, root, split, npoints=2500, classification=False, class_choice=class_choice, 
                  image=False, normalize=True):
 
         self.root = root
