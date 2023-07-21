@@ -40,12 +40,6 @@ class_choice = ['Airplane','Chair']
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-'''MODEL_PATH = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_49planechair.pth'
-classifier = PointNetClassHead(num_points=10000, num_global_feats=1024, k=16).to(DEVICE)
-classifier.load_state_dict(torch.load(MODEL_PATH))
-classifier.eval();'''
-
-
 
 class TreeGAN():
     def __init__(self, args):
@@ -68,39 +62,9 @@ class TreeGAN():
 
         self.GP = GradientPenalty(args.lambdaGP, gamma=1, device=args.device)
         print("Network prepared.")
-        # ----------------------------------------------------------------------------------------------------- #
-
-        # ---------------------------------------------Visualization------------------------------------------- #
-        """self.vis = visdom.Visdom(port=args.visdom_port)"""
-        """assert self.vis.check_connection()"""
-        print("Visdom connected.")
+    
         # ----------------------------------------------------------------------------------------------------- #
     
-    def calculate_accuracy_on_generated_samples(self, num_samples=100):
-        self.G.eval()
-        self.classifier.eval()
-        generated_samples = torch.Tensor([]).to(args.device)
-    
-        with torch.no_grad():
-            for _ in range(num_samples):
-                z = torch.randn(args.batch_size, 1, 96).to(args.device)
-                tree = [z]
-                sample = self.G(tree)
-                generated_samples = torch.cat((generated_samples, sample), dim=0)
-    
-        # Normalize generated samples (similar to how training data was normalized)
-        normalized_samples = ShapenetDataset.normalize_points(generated_samples)
-    
-        # Pass normalized samples through the pre-trained classifier
-        with torch.no_grad():
-            logits, _, _ = self.classifier(normalized_samples.transpose(2, 1))
-            predictions = torch.argmax(logits, dim=1)
-    
-        # Calculate accuracy of the pre-trained classifier on generated samples
-        accuracy = (predictions == 0).float().mean().item()
-
-        return accuracy
-   
     def run(self, save_ckpt=None, load_ckpt=None):        
         color_num = 4
         chunk_size = int(self.args.point_num / color_num)
@@ -138,10 +102,6 @@ class TreeGAN():
             metric['FPD'] = checkpoint['FPD']
             
             print("Checkpoint loaded.")
-
-         # Evaluation settings
-        eval_batch_size = 100  # Adjust this based on your available GPU memory
-        eval_num_samples = 100
         
         for epoch in range(epoch_log, self.args.epochs):
             for _iter, data in enumerate(self.dataLoader, iter_log):
@@ -191,11 +151,7 @@ class TreeGAN():
 
                 loss_log['G_loss'].append(g_loss.item())
                 
-                self.G.eval() 
-
-                total_accuracy = 0.0
-                num_batches = eval_num_samples // eval_batch_size
-
+        
                 # --------------------- Visualization -------------------- #
 
                 print("[Epoch/Iter] ", "{:3} / {:3}".format(epoch, _iter),
@@ -315,14 +271,6 @@ class TreeGAN():
                 metric['FPD'].append(fpd)
                 print('[{:4} Epoch] Frechet Pointcloud Distance <<< {:.10f} >>>'.format(epoch, fpd))
                 
-                with torch.no_grad():
-                    for batch_idx in range(num_batches):
-                        batch_accuracy = self.calculate_accuracy_on_generated_samples(
-                            self.G, self.classifier, num_samples=eval_batch_size
-                        )
-                        total_accuracy += batch_accuracy
-
-                total_accuracy /= num_batches
                 class_name = class_choice if class_choice is not None else 'all'
                 torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN_{}_{}.pt'.format(str(epoch), class_name))
                 del fake_pointclouds
