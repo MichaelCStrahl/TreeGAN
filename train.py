@@ -50,9 +50,9 @@ class TreeGAN():
         self.dataLoader = torch.utils.data.DataLoader(self.data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=2)
         print("Training Dataset : {} prepared.".format(len(self.data)))
         # ----------------------------------------------------------------------------------------------------- #
-        points, targets = next(iter(self.dataLoader))
-        classifier = PointNetClassHead(k=16, num_global_feats=1024)
-        out, _, _ = classifier(points.transpose(2, 1))
+        #points, targets = next(iter(self.dataLoader))
+        #classifier = PointNetClassHead(k=16, num_global_feats=1024)
+        #out, _, _ = classifier(points.transpose(2, 1))
         #print(f'Class output shape: {out.shape}')
         # -------------------------------------------------Module---------------------------------------------- #
         self.G = Generator(batch_size=args.batch_size, features=args.G_FEAT, degrees=args.DEGREE, support=args.support).to(args.device)
