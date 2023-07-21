@@ -73,7 +73,33 @@ class TreeGAN():
         """assert self.vis.check_connection()"""
         print("Visdom connected.")
         # ----------------------------------------------------------------------------------------------------- #
+    
+    def calculate_accuracy_on_generated_samples(generator, classifier, num_samples=1000):
+    generator.eval()
+    classifier.eval()
 
+    generated_samples = torch.Tensor([]).to(args.device)
+
+    with torch.no_grad():
+        for _ in range(num_samples):
+            z = torch.randn(args.batch_size, 1, 96).to(args.device)
+            tree = [z]
+            sample = generator(tree)
+            generated_samples = torch.cat((generated_samples, sample), dim=0)
+
+    # Normalize generated samples (similar to how training data was normalized)
+    normalized_samples = ShapenetDataset.normalize_points(generated_samples)
+
+    # Pass normalized samples through the pre-trained classifier
+    with torch.no_grad():
+        logits, _, _ = classifier(normalized_samples.transpose(2, 1))
+        predictions = torch.argmax(logits, dim=1)
+
+    # Calculate accuracy of the pre-trained classifier on generated samples
+    accuracy = (predictions == 0).float().mean().item()
+
+    return accuracy
+   
     def run(self, save_ckpt=None, load_ckpt=None):        
         color_num = 4
         chunk_size = int(self.args.point_num / color_num)
@@ -278,7 +304,8 @@ class TreeGAN():
                 fpd = calculate_fpd(fake_pointclouds, batch_size=100, dims=1808, device=self.args.device)
                 metric['FPD'].append(fpd)
                 print('[{:4} Epoch] Frechet Pointcloud Distance <<< {:.10f} >>>'.format(epoch, fpd))
-
+                accuracy_on_generated = calculate_accuracy_on_generated_samples(self.G, classifier, num_samples=1000)
+                print(f'Accuracy on Generated Samples: {accuracy_on_generated:.2f}')
                 class_name = class_choice if class_choice is not None else 'all'
                 torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN_{}_{}.pt'.format(str(epoch), class_name))
                 del fake_pointclouds
