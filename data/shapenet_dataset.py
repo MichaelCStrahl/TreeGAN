@@ -19,7 +19,7 @@ from PIL import Image
 import torch
 from torch.utils.data import Dataset
 
-class_choice = ['Airplane','Chair']
+class_choice = ['Bag','Cap','Earphone']
 
 class ShapenetDataset(Dataset):
 
