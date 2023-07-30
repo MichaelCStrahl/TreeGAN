@@ -3,12 +3,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 CATEGORIES = {
-    'Airplane': 0,
-    #'Bag': 1,
-   # 'Cap': 2,
+    #'Airplane': 0,
+    'Bag': 1,
+    'Cap': 2,
    # 'Car': 3,
-    'Chair': 4,
-   # 'Earphone': 5,
+    #'Chair': 4,
+    'Earphone': 5,
    ## 'Guitar': 6,
    # 'Knife': 7,
    # 'Lamp': 8,
