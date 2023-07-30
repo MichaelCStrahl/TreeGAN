@@ -159,7 +159,7 @@ class TreeGAN():
                       "[ G_Loss ] ", "{: 7.6f}".format(g_loss), 
                       "[ Time ] ", "{:4.2f}s".format(time.time()-start_time))
 
-                if _iter % 15 == 0 and _iter !=0:
+                if _iter % 25 == 0 and _iter !=0:
                     generated_point = self.G.getPointcloud()
                     """plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1)
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
@@ -244,7 +244,7 @@ class TreeGAN():
                     print('Figures are saved.')
 
             # ---------------------- Save checkpoint --------------------- #
-            if epoch % 3 == 0 and not save_ckpt == None:
+            if epoch % 10 == 0 and not save_ckpt == None:
                 torch.save({
                         'epoch': epoch,
                         'iter': _iter,
