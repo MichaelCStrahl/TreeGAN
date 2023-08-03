@@ -179,7 +179,7 @@ def save_statistics(real_pointclouds, path, model, batch_size, dims, cuda):
 def calculate_fpd(pointclouds1, pointclouds2=None, batch_size=100, dims=1808, device=None):
     """Calculates the FPD of two pointclouds"""
 
-    PointNet_path = '/content/TreeGAN/evaluation/cls_model_39.pth'
+    PointNet_path = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_3class_491.pth'
     statistic_save_path = '/content/TreeGAN/evaluation/pre_statistics.npz'
     model = PointNetCls(k=16)
     model.load_state_dict(torch.load(PointNet_path))
