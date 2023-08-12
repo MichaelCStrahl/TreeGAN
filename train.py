@@ -257,12 +257,19 @@ class TreeGAN():
 
                 print('Checkpoint is saved.')
                 fake_pointclouds = torch.Tensor([])
+                for i in range(100): # batch_size * 100
+                    z = torch.randn(self.args.batch_size, 1, 96).to(self.args.device)
+                    tree = [z]
+                    with torch.no_grad():
+                        sample = self.G(tree).cpu()
+                    fake_pointclouds = torch.cat((fake_pointclouds, sample), dim=0)
+                
                 class_name = class_choice if class_choice is not None else 'all'
                 torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN3class_{}_{}.pt'.format(str(epoch), class_name))
                 del fake_pointclouds
             # ---------------- Frechet Pointcloud Distance --------------- #
             if epoch % 1 == 0:
-                
+                fake_pointclouds = torch.Tensor([])
                 for i in range(100): # batch_size * 100
                     z = torch.randn(self.args.batch_size, 1, 96).to(self.args.device)
                     tree = [z]
