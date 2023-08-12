@@ -19,7 +19,7 @@ import plotly.graph_objects as go
 
 CATEGORIES = {
     #'Airplane': 0,
-    'Bag': 1,
+    #'Bag': 1,
     'Cap': 2,
    # 'Car': 3,
     #'Chair': 4,
@@ -36,7 +36,7 @@ CATEGORIES = {
    # 'Table': 15
     }
 
-class_choice = ['Bag','Cap','Earphone']
+class_choice = ['Cap','Earphone']
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -49,7 +49,7 @@ class TreeGAN():
         self.dataLoader = torch.utils.data.DataLoader(self.data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=2)
         print("Training Dataset : {} prepared.".format(len(self.data)))
         # ----------------------------------------------------------------------------------------------------- #
-        MODEL_PATH = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_3class_491.pth'
+        MODEL_PATH = '/content/drive/MyDrive/ResultadosLothar/Classificador/cls_model_2class_998.pth'
         self.classifier = PointNetClassHead(num_points=args.point_num, num_global_feats=1024, k=16).to(args.device)
         self.classifier.load_state_dict(torch.load(MODEL_PATH))
         self.classifier.eval()
@@ -256,7 +256,9 @@ class TreeGAN():
                 }, save_ckpt+str(epoch)+'.pt')
 
                 print('Checkpoint is saved.')
-            
+                class_name = class_choice if class_choice is not None else 'all'
+                torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN3class_{}_{}.pt'.format(str(epoch), class_name))
+                del fake_pointclouds
             # ---------------- Frechet Pointcloud Distance --------------- #
             if epoch % 1 == 0:
                 fake_pointclouds = torch.Tensor([])
@@ -271,9 +273,7 @@ class TreeGAN():
                 metric['FPD'].append(fpd)
                 print('[{:4} Epoch] Frechet Pointcloud Distance <<< {:.10f} >>>'.format(epoch, fpd))
                 
-                class_name = class_choice if class_choice is not None else 'all'
-                torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN3class_{}_{}.pt'.format(str(epoch), class_name))
-                del fake_pointclouds
+                
             
                 
                     
