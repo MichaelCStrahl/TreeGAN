@@ -104,11 +104,13 @@ class TreeGAN():
             print("Checkpoint loaded.")
         
         for epoch in range(epoch_log, self.args.epochs):
+            iter_total = 0
             for _iter, data in enumerate(self.dataLoader, iter_log):
                 # Start Time
                 start_time = time.time()
                 point, _ = data
                 point = point.to(args.device)
+                iter_total+=1
 
                 # -------------------- Discriminator -------------------- #
                 for d_iter in range(self.args.D_iter):
@@ -159,7 +161,7 @@ class TreeGAN():
                       "[ G_Loss ] ", "{: 7.6f}".format(g_loss), 
                       "[ Time ] ", "{:4.2f}s".format(time.time()-start_time))
 
-                if _iter % 25 == 0 and _iter !=0:
+                if iter_total % 20 == 0 and iter_total !=0:
                     generated_point = self.G.getPointcloud()
                     """plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1)
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
@@ -256,17 +258,9 @@ class TreeGAN():
                 }, save_ckpt+str(epoch)+'.pt')
 
                 print('Checkpoint is saved.')
-                fake_pointclouds = torch.Tensor([])
-                for i in range(100): # batch_size * 100
-                    z = torch.randn(self.args.batch_size, 1, 96).to(self.args.device)
-                    tree = [z]
-                    with torch.no_grad():
-                        sample = self.G(tree).cpu()
-                    fake_pointclouds = torch.cat((fake_pointclouds, sample), dim=0)
                 
-                class_name = class_choice if class_choice is not None else 'all'
-                torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN3class_{}_{}.pt'.format(str(epoch), class_name))
-                del fake_pointclouds
+                
+                
             # ---------------- Frechet Pointcloud Distance --------------- #
             if epoch % 1 == 0:
                 fake_pointclouds = torch.Tensor([])
@@ -280,7 +274,9 @@ class TreeGAN():
                 fpd = calculate_fpd(fake_pointclouds, batch_size=100, dims=1808, device=self.args.device)
                 metric['FPD'].append(fpd)
                 print('[{:4} Epoch] Frechet Pointcloud Distance <<< {:.10f} >>>'.format(epoch, fpd))
-                
+                class_name = class_choice if class_choice is not None else 'all'
+                torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN3class_{}_{}.pt'.format(str(epoch), class_name))
+                del fake_pointclouds
                 
             
                 
