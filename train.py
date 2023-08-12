@@ -161,7 +161,7 @@ class TreeGAN():
                       "[ G_Loss ] ", "{: 7.6f}".format(g_loss), 
                       "[ Time ] ", "{:4.2f}s".format(time.time()-start_time))
 
-                if iter_total % 20 == 0 and iter_total !=0:
+                if iter_total % 200 == 0 and iter_total !=0:
                     generated_point = self.G.getPointcloud()
                     """plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1)
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
@@ -275,7 +275,7 @@ class TreeGAN():
                 metric['FPD'].append(fpd)
                 print('[{:4} Epoch] Frechet Pointcloud Distance <<< {:.10f} >>>'.format(epoch, fpd))
                 class_name = class_choice if class_choice is not None else 'all'
-                torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN3class_{}_{}.pt'.format(str(epoch), class_name))
+                #torch.save(fake_pointclouds, '/content/drive/MyDrive/ResultadosLothar/Generated/treeGCN3class_{}_{}.pt'.format(str(epoch), class_name))
                 del fake_pointclouds
                 
             
