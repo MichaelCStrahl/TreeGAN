@@ -178,6 +178,24 @@ class TreeGAN():
                     #print(plot_X)
                     #print(loss_G)
                     #print(loss_D)
+                    
+                    torch.cuda.empty_cache()
+                    points = generated_point
+            
+                    norm_points = ShapenetDataset.normalize_points(points)
+                    
+                    norm_points = ShapenetDataset.normalize_points(points)
+                    with torch.no_grad():
+                        norm_points = norm_points.unsqueeze(0).transpose(2, 1).to(DEVICE)
+                        preds, _, _ = self.classifier(norm_points)
+                        preds = torch.softmax(preds, dim=1)
+                        pred_choice = preds.squeeze().argmax()
+                    pred_class = list(CATEGORIES.keys())[pred_choice.cpu().numpy()]
+                    pred_prob = preds[0, pred_choice]
+                    print(f'The predicted class is: {pred_class}, with probability: {pred_prob}')
+
+
+                    
                     # Inside the 'run' function, after generating the point cloud
                     class_labels = torch.full((points.shape[0], 1), pred_choice, dtype=torch.long).to(points.device)
                     class_labels_onehot = F.one_hot(class_labels, num_classes=len(class_choice)).float()
@@ -232,20 +250,7 @@ class TreeGAN():
                     
                     
                     
-                    torch.cuda.empty_cache()
-                    points = generated_point
-            
-                    norm_points = ShapenetDataset.normalize_points(points)
                     
-                    norm_points = ShapenetDataset.normalize_points(points)
-                    with torch.no_grad():
-                        norm_points = norm_points.unsqueeze(0).transpose(2, 1).to(DEVICE)
-                        preds, _, _ = self.classifier(norm_points)
-                        preds = torch.softmax(preds, dim=1)
-                        pred_choice = preds.squeeze().argmax()
-                    pred_class = list(CATEGORIES.keys())[pred_choice.cpu().numpy()]
-                    pred_prob = preds[0, pred_choice]
-                    print(f'The predicted class is: {pred_class}, with probability: {pred_prob}')
 
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
