@@ -19,6 +19,8 @@ class Discriminator(nn.Module):
         self.final_layer = nn.Sequential(nn.Linear(features[-1], features[-3]),
                                          nn.Linear(features[-3], features[-5]),
                                          nn.Linear(features[-5], 1))
+        
+
 
     def forward(self, f):
         feat = f.transpose(1,2)
@@ -54,6 +56,8 @@ class Generator(nn.Module):
                                     TreeGCN(self.batch_size, inx, features, degrees, 
                                             support=support, node=vertex_num, upsample=True, activation=True))
             vertex_num = int(vertex_num * degrees[inx])
+        self.num_classes = len(CATEGORIES)
+        self.label_generator = nn.Linear(self.args.batch_size, self.num_classes)
 
     def forward(self, tree):
         feat = self.gcn(tree)
@@ -64,3 +68,14 @@ class Generator(nn.Module):
 
     def getPointcloud(self):
         return self.pointcloud[-1]
+    def generate_point_cloud_with_label(self):
+        z = torch.randn(self.args.batch_size, 1, 96).to(args.device)
+        tree = [z]
+        generated_point = self.forward(tree)
+
+        # Generate labels for the generated point cloud
+        label_logits = self.label_generator(z)
+        label_predictions = torch.argmax(label_logits, dim=1)
+        label = label_predictions[0].cpu().numpy()
+
+        return generated_point, label
