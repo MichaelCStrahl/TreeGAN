@@ -163,7 +163,7 @@ class TreeGAN():
 
                 if _iter % 20 == 0 and _iter !=0:
 
-                    generated_point2, generated_label = self.G.generate_point_cloud_with_label()
+            
                     generated_point = self.G.getPointcloud()
                     """plot_X = np.stack([np.arange(len(loss_log[legend])) for legend in loss_legend], 1)
                     plot_Y = np.stack([np.array(loss_log[legend]) for legend in loss_legend], 1)"""
@@ -218,7 +218,7 @@ class TreeGAN():
 
                     # Show the plot
                     fig.show()
-                    print(generated_label)
+                    
                     
                     torch.cuda.empty_cache()
                     points = generated_point
