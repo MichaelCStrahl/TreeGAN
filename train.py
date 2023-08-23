@@ -16,6 +16,7 @@ import time
 #import visdom
 import numpy as np
 import plotly.graph_objects as go
+import torch.nn.functional as F
 
 CATEGORIES = {
     #'Airplane': 0,
