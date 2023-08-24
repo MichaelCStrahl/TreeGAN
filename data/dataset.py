@@ -13,7 +13,7 @@ SAVE_DIR = '/content/dataset/Spatial/'
 IMAGE_DIR = '/content/dataset/ShapeNetRendering/'
 POINT_DIR = '/content/dataset/ShapeNetPointcloud/'
 OBJ_DIR = '/content/dataset/ShapeNetCore.v2/'
-CATEGORY_FILE = '/content/drive/MyDrive/shapenetcore_partanno_segmentation_benchmark_v0/synsetoffset2category.txt'
+CATEGORY_FILE = './drive/MyDrive/shapenetcore_partanno_segmentation_benchmark_v0/synsetoffset2category.txt'
 
 class SpatialDataset(data.Dataset):
     def __init__(self, class_choice=None, train=True):
