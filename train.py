@@ -197,12 +197,12 @@ class TreeGAN():
 
 
                     
-                    # Inside the 'run' function, after generating the point cloud
+                      # Inside the 'run' function, after generating the point cloud
                     class_labels = torch.full((points.shape[0], points.shape[1], 1), pred_choice, dtype=torch.long).to(points.device)
                     class_labels_onehot = F.one_hot(class_labels.squeeze(), num_classes=len(CATEGORIES)).float()  # One-hot encoding
                     
                     # Concatenate class labels with each point in the point cloud
-                    labeled_pointcloud = torch.cat((points, class_labels_onehot.unsqueeze(2)), dim=2)
+                    labeled_pointcloud = torch.cat((points, class_labels_onehot), dim=2)
                     
                     # ... (rest of your code)
                     
