@@ -309,11 +309,10 @@ if __name__ == '__main__':
 
     args.device = torch.device('cuda:'+str(args.gpu) if torch.cuda.is_available() else 'cpu')
 
-    print(args)
-    exit()
-
     SAVE_CHECKPOINT = args.ckpt_path + args.ckpt_save if args.ckpt_save is not None else None
     LOAD_CHECKPOINT = args.ckpt_path + args.ckpt_load if args.ckpt_load is not None else None
+
+    print(SAVE_CHECKPOINT, LOAD_CHECKPOINT)
 
     model = TreeGAN(args)
     model.run(save_ckpt=SAVE_CHECKPOINT, load_ckpt=LOAD_CHECKPOINT)
