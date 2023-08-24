@@ -194,43 +194,33 @@ class TreeGAN():
                     pred_class = list(CATEGORIES.keys())[pred_choice.cpu().numpy()]
                     pred_prob = preds[0, pred_choice]
                     print(f'The predicted class is: {pred_class}, with probability: {pred_prob}')
-
-
                     
-                      # Inside the 'run' function, after generating the point cloud
-                    class_labels = torch.full((points.shape[0], points.shape[1], 1), pred_choice, dtype=torch.long).to(points.device)
-                    class_labels_onehot = F.one_hot(class_labels.squeeze(), num_classes=len(CATEGORIES)).float()  # One-hot encoding
-                    
-                    # Concatenate class labels with each point in the point cloud
-                    labeled_pointcloud = torch.cat((points, class_labels_onehot), dim=2)
-                    
-                    # ... (rest of your code)
-                    
-                    # Visualize the combined data
-                    x = labeled_pointcloud[:, :, 2]
-                    y = labeled_pointcloud[:, :, 0]
-                    z = labeled_pointcloud[:, :, 1]
-                    
-                    # Create color map for class labels
-                    color_map = px.colors.qualitative.Set1[:len(class_choice)]
-                    
-                    traces = []
-                    for i in range(len(class_choice)):
-                        mask = class_labels == i
-                        trace = go.Scatter3d(
-                            x=x[mask],
-                            y=y[mask],
-                            z=z[mask],
-                            mode='markers',
-                            marker=dict(
-                                size=2,
-                                color=color_map[i],
-                                opacity=1,
-                            ),
-                            name=class_choice[i]
+                    fig = go.Figure()
+                    fig.add_trace(go.Scatter(x=new_x, y=loss_G,
+                                        mode='lines',
+                                        name='Loss G'))
+                    fig.add_trace(go.Scatter(x=new_x, y=loss_D,
+                                        mode='lines',
+                                        name='Loss D'))
+                    fig.show()
+                    generated_point_cpu = generated_point.to('cpu').detach().numpy()
+                    x = generated_point_cpu[:, 2]
+                    y = generated_point_cpu[:, 0]
+                    z = generated_point_cpu[:, 1]
+                    trace = go.Scatter3d(
+                        x=x,
+                        y=y,
+                        z=z,
+                        mode='markers',
+                        marker=dict(
+                            size=2,
+                            color=colors,
+                            colorscale='Viridis',  # Adjust the colorscale as per your preference
+                            opacity=1,
                         )
-                        traces.append(trace)
-                    
+                    )
+                    data = [trace]
+                    # Create the layout for the plot
                     layout = go.Layout(
                         title='Generated Pointcloud',
                         scene=dict(
@@ -241,9 +231,17 @@ class TreeGAN():
                         width=800,
                         height=800
                     )
-                    
-                    fig = go.Figure(data=traces, layout=layout)
+                    # Create the figure using data and layout
+                    fig = go.Figure(data=data, layout=layout)
+
+                    # Show the plot
                     fig.show()
+
+
+                    
+                     
+                    
+                    
 
 
 
