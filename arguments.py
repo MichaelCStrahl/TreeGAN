@@ -6,7 +6,7 @@ class Arguments:
         self._parser = argparse.ArgumentParser(description='Arguments for TreeGAN.')
 
         # Dataset argument
-        self._parser.add_argument('--dataset_path', type=str, default='/content/shapenetcore_partanno_segmentation_benchmark_v0', help='Dataset file path.')
+        self._parser.add_argument('--dataset_path', type=str, default='/content/drive/MyDrive/shapenetcore_partanno_segmentation_benchmark_v0', help='Dataset file path.')
         self._parser.add_argument('--class_choice', type=str, help='Select one class to generate. [plane, chair, ...] (default:all_class)')
         self._parser.add_argument('--batch_size', type=int, default=5, help='Integer value for batch size.')
         self._parser.add_argument('--point_num', type=int, default=2048, help='Integer value for number of points.')
