@@ -277,6 +277,9 @@ class TreeGAN():
                 }, save_ckpt+str(epoch)+'.pt')
 
                 print('Checkpoint is saved.')
+
+
+                exit()
                 
                 
                 
