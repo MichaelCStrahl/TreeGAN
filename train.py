@@ -266,6 +266,7 @@ class TreeGAN():
 
             # ---------------------- Save checkpoint --------------------- #
             if epoch % 20 == 0 and not save_ckpt == None:
+                print(f'The predicted class is: {pred_class}, with probability: {pred_prob}')
                 torch.save({
                         'epoch': epoch,
                         'iter': _iter,
