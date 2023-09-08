@@ -269,7 +269,7 @@ class TreeGAN():
                     print('Figures are saved.')
 
             # ---------------------- Save checkpoint --------------------- #
-            if epoch % 20 == 0 and not save_ckpt == None:
+            if epoch % 1 == 0 and not save_ckpt == None:
                 print(f'teste: {pred_class}, teste: {pred_prob}')
                 torch.save({
                         'epoch': epoch,
@@ -282,9 +282,6 @@ class TreeGAN():
                 }, save_ckpt+str(epoch)+'.pt')
 
                 print('Checkpoint is saved.')
-
-
-                exit()
                 
                 
                 
