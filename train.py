@@ -162,6 +162,10 @@ class TreeGAN():
                       "[ G_Loss ] ", "{: 7.6f}".format(g_loss), 
                       "[ Time ] ", "{:4.2f}s".format(time.time()-start_time))
 
+                
+                pred_class = ''
+                pred_prob = 0.0
+
                 if _iter % 20 == 0 and _iter !=0:
 
             
