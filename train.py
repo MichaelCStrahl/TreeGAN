@@ -262,7 +262,7 @@ class TreeGAN():
                         'D_loss': loss_log['D_loss'],
                         'G_loss': loss_log['G_loss'],
                         'FPD': metric['FPD']
-                }, save_ckpt+str(epoch)+pred_class+'.pt')
+                }, save_ckpt+str(epoch)+'_pred_clas_'+pred_class+'.pt')
 
                 print('Checkpoint is saved.')
                 
