@@ -106,6 +106,8 @@ class TreeGAN():
         
         for epoch in range(epoch_log, self.args.epochs):
             iter_total = 0
+            pred_class = ''
+            pred_prob = 0.0
             for _iter, data in enumerate(self.dataLoader, iter_log):
                 # Start Time
                 start_time = time.time()
@@ -161,10 +163,6 @@ class TreeGAN():
                       "[ D_Loss ] ", "{: 7.6f}".format(d_loss), 
                       "[ G_Loss ] ", "{: 7.6f}".format(g_loss), 
                       "[ Time ] ", "{:4.2f}s".format(time.time()-start_time))
-
-                
-                pred_class = ''
-                pred_prob = 0.0
 
                 if _iter % 20 == 0 and _iter !=0:
 
@@ -240,21 +238,6 @@ class TreeGAN():
 
                     # Show the plot
                     fig.show()
-
-
-                    
-                     
-                    
-                    
-
-
-
-                    
-                    
-                    
-                    
-                    
-
 
                     """self.vis.line(X=plot_X, Y=plot_Y, win=1,
                                   opts={'title': 'TreeGAN Loss', 'legend': loss_legend, 'xlabel': 'Iteration', 'ylabel': 'Loss'})"""
